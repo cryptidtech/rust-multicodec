@@ -1,17 +1,21 @@
 [package]
 name = "multicodec"
+version = "0.2.0"
+edition = "2021"
+authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
 description = "implementing the multicodec spec"
-version = "0.1.0"
-authors = ["Benjamin Kampmann <ben@gnunicorn.org>"]
+repository = "https://github.com/cryptidtech/rust-multicodec"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/gnunicorn/rust-multicodec"
-readme = "Readme.md"
+readme = "README.md"
 keywords = ["multiformats", "multicodec", "serde"]
 
-[badges]
-travis-ci = { repository = "gnunicorn/rust-multicodec", branch = "master"}
-
 [dependencies]
-unsigned-varint = "0.2"
-failure = "0.1"
+anyhow = "1.0"
+thiserror = "1.0"
+unsigned-varint = { version = "0.7", features = ["std"] }
+
+[build-dependencies]
+convert_case = "0.6"
+csv = "1.3"
 serde = "1.0"
+serde_derive = "1.0"
