@@ -1,6 +1,7 @@
 #![allow(missing_docs)]
 
 use crate::error::Error;
+use std::fmt;
 
 macro_rules! build_codec_enum {
     {$( $val:expr => $var:ident, )*} => {
@@ -29,6 +30,13 @@ macro_rules! build_codec_enum {
                     _ => Err(Error::InvalidCodec(code).into()),
                 }
             }
+
+            /// Convert a codec to &str
+            pub fn as_str(&self) -> &str {
+                match *self {
+                    $( $var => stringify!($var), )*
+                }
+            }
         }
     }
 }
@@ -38,6 +46,32 @@ impl TryFrom<u64> for Codec {
 
     fn try_from(code: u64) -> Result<Self, Self::Error> {
         Codec::from_code(code)
+    }
+}
+
+impl fmt::Display for Codec {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_from_code() {
+        assert_eq!(Ed25519Pub, Codec::from_code(0xED).unwrap());
+    }
+
+    #[test]
+    fn test_to_code() {
+        assert_eq!(0xED, Ed25519Pub.code());
+    }
+
+    #[test]
+    fn test_string_conversion() {
+        assert_eq!("Ed25519Pub", Ed25519Pub.as_str());
     }
 }
 
