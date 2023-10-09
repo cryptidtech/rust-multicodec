@@ -73,7 +73,7 @@ impl TryFrom<u64> for Codec {
 
 impl fmt::Display for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.as_str())
+        write!(f, "{} (0x{:x})", self.as_str(), self.code())
     }
 }
 
