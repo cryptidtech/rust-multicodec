@@ -42,6 +42,12 @@ macro_rules! build_codec_enum {
     }
 }
 
+impl Default for Codec {
+    fn default() -> Self {
+        Raw
+    }
+}
+
 impl Into<Vec<u8>> for Codec {
     fn into(self) -> Vec<u8> {
         let mut buf = [0u8; 10];
