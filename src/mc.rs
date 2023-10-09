@@ -1,4 +1,4 @@
-use crate::{error::Error, table::Codec};
+use crate::{codec::Codec, error::Error};
 use unsigned_varint::{decode, encode};
 
 /// Multicodec wrapper for pulling codec values from slices

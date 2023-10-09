@@ -17,14 +17,14 @@ pub mod error;
 pub mod mc;
 
 /// Codec enum definition from the table
-pub mod table;
+pub mod codec;
 
 /// ...and in the darkness bind them
 pub mod prelude {
     use super::*;
 
     pub use super::Result;
+    pub use codec::*;
     pub use error::*;
     pub use mc::*;
-    pub use table::*;
 }
