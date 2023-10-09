@@ -12,6 +12,7 @@ macro_rules! build_codec_enum {
         /// Codecs from the multicodec table
         pub enum Codec {
             $( $var, )*
+            Unknown(u64),
         }
 
         use Codec::*;
@@ -21,6 +22,7 @@ macro_rules! build_codec_enum {
             pub fn code(&self) -> u64 {
                 match *self {
                     $( $var => $val, )*
+                    Unknown(code) => code,
                 }
             }
 
@@ -28,7 +30,7 @@ macro_rules! build_codec_enum {
             pub fn from_code(code: u64) -> Result<Codec, Error> {
                 match code {
                     $( $val => Ok($var), )*
-                    _ => Err(Error::InvalidCodec(code).into()),
+                    _ => Ok(Unknown(code)),
                 }
             }
 
@@ -36,6 +38,7 @@ macro_rules! build_codec_enum {
             pub fn as_str(&self) -> &str {
                 match *self {
                     $( $var => stringify!($var), )*
+                    Unknown(_) => "Unknown",
                 }
             }
         }
@@ -94,6 +97,11 @@ mod tests {
     #[test]
     fn test_string_conversion() {
         assert_eq!("Ed25519Pub", Ed25519Pub.as_str());
+    }
+
+    #[test]
+    fn test_unknown() {
+        assert_eq!(Unknown(0xDEAC), Codec::from_code(0xDEAD).unwrap());
     }
 }
 
