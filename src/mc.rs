@@ -41,6 +41,16 @@ impl<'a> MultiCodec<'a> {
     pub fn new(codec: Codec, data: &'a [u8]) -> MultiCodec {
         MultiCodec { codec, data }
     }
+
+    /// get the codec
+    pub fn codec(&self) -> Codec {
+        self.codec
+    }
+
+    /// get the remaining slice reference
+    pub fn data(&self) -> &'a [u8] {
+        self.data
+    }
 }
 
 #[cfg(test)]
