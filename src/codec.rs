@@ -41,6 +41,20 @@ macro_rules! build_codec_enum {
                     Unknown(_) => "Unknown",
                 }
             }
+
+            /// Convert the codec to a unisigned varint bytes
+            pub fn to_vec(&self) -> Vec<u8> {
+                let mut buf = [0u8; 10];
+                encode::u64(self.code(), &mut buf);
+                let mut v: Vec<u8> = Vec::new();
+                for b in &buf {
+                    v.push(*b);
+                    if decode::is_last(*b) {
+                        break;
+                    }
+                }
+                v
+            }
         }
     }
 }
@@ -53,16 +67,7 @@ impl Default for Codec {
 
 impl Into<Vec<u8>> for Codec {
     fn into(self) -> Vec<u8> {
-        let mut buf = [0u8; 10];
-        encode::u64(self.code(), &mut buf);
-        let mut v: Vec<u8> = Vec::new();
-        for b in &buf {
-            v.push(*b);
-            if decode::is_last(*b) {
-                break;
-            }
-        }
-        v
+        self.to_vec()
     }
 }
 
@@ -101,7 +106,7 @@ mod tests {
 
     #[test]
     fn test_unknown() {
-        assert_eq!(Unknown(0xDEAC), Codec::from_code(0xDEAD).unwrap());
+        assert_eq!(Unknown(0xDEAD), Codec::from_code(0xDEAD).unwrap());
     }
 }
 
