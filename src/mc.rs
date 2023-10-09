@@ -1,5 +1,5 @@
 use crate::{codec::Codec, error::Error};
-use unsigned_varint::{decode, encode};
+use unsigned_varint::decode;
 
 /// Multicodec wrapper for pulling codec values from slices
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
@@ -22,15 +22,7 @@ impl<'a> TryFrom<&'a [u8]> for MultiCodec<'a> {
 
 impl Into<Vec<u8>> for MultiCodec<'_> {
     fn into(self) -> Vec<u8> {
-        let mut buf = [0u8; 10];
-        encode::u64(self.codec.code(), &mut buf);
-        let mut v: Vec<u8> = Vec::new();
-        for b in &buf {
-            v.push(*b);
-            if decode::is_last(*b) {
-                break;
-            }
-        }
+        let mut v: Vec<u8> = self.codec.into();
         v.extend(self.data);
         v
     }

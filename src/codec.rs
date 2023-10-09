@@ -2,6 +2,7 @@
 
 use crate::error::Error;
 use std::fmt;
+use unsigned_varint::{decode, encode};
 
 macro_rules! build_codec_enum {
     {$( $val:expr => $var:ident, )*} => {
@@ -38,6 +39,21 @@ macro_rules! build_codec_enum {
                 }
             }
         }
+    }
+}
+
+impl Into<Vec<u8>> for Codec {
+    fn into(self) -> Vec<u8> {
+        let mut buf = [0u8; 10];
+        encode::u64(self.code(), &mut buf);
+        let mut v: Vec<u8> = Vec::new();
+        for b in &buf {
+            v.push(*b);
+            if decode::is_last(*b) {
+                break;
+            }
+        }
+        v
     }
 }
 
