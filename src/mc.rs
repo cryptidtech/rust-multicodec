@@ -56,4 +56,12 @@ mod tests {
         assert_eq!(packed, "\x12EiC5TSe5k00".as_bytes());
         assert_eq!(redo, codec);
     }
+
+    #[test]
+    fn test_to_vec() {
+        let bytes = Codec::Ed25519Priv.to_vec();
+        assert_eq!([0x80, 0x26], bytes.as_slice());
+        let mc = MultiCodec::try_from(bytes.as_slice()).unwrap();
+        assert_eq!(mc.codec(), Codec::Ed25519Priv);
+    }
 }

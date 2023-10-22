@@ -1,5 +1,4 @@
 #![allow(missing_docs)]
-
 use crate::error::Error;
 use std::fmt;
 use unsigned_varint::{decode, encode};
@@ -18,7 +17,7 @@ macro_rules! build_codec_enum {
         use Codec::*;
 
         impl Codec {
-            /// Get the base code.
+            /// Get the base code. NOTE: these are NOT varuint encoded
             pub fn code(&self) -> u64 {
                 match *self {
                     $( $var => $val, )*
@@ -42,14 +41,14 @@ macro_rules! build_codec_enum {
                 }
             }
 
-            /// Convert the codec to a unisigned varint bytes
+            /// Convert the codec to a packed unisigned varint bytes
             pub fn to_vec(&self) -> Vec<u8> {
                 let mut buf = [0u8; 10];
                 encode::u64(self.code(), &mut buf);
                 let mut v: Vec<u8> = Vec::new();
-                for b in &buf {
-                    v.push(*b);
-                    if decode::is_last(*b) {
+                for b in buf {
+                    v.push(b);
+                    if decode::is_last(b) {
                         break;
                     }
                 }
