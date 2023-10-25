@@ -43,7 +43,7 @@ macro_rules! build_codec_enum {
 
             /// Convert the codec to a packed unisigned varint bytes
             pub fn to_vec(&self) -> Vec<u8> {
-                let mut buf = [0u8; 10];
+                let mut buf = encode::u64_buffer();
                 encode::u64(self.code(), &mut buf);
                 let mut v: Vec<u8> = Vec::new();
                 for b in buf {

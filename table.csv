@@ -5,6 +5,7 @@ cidv2,                          cid,            0x02,           draft,      CIDv
 cidv3,                          cid,            0x03,           draft,      CIDv3
 ip4,                            multiaddr,      0x04,           permanent,
 tcp,                            multiaddr,      0x06,           permanent,
+vlad,                           cid,            0x07,           draft,      Verifiable Long-lived ADdress
 sha1,                           multihash,      0x11,           permanent,
 sha2-256,                       multihash,      0x12,           permanent,
 sha2-512,                       multihash,      0x13,           permanent,
@@ -38,6 +39,7 @@ dns6,                           multiaddr,      0x37,           permanent,
 dnsaddr,                        multiaddr,      0x38,           permanent,
 varsigv2,                       multiformat,    0x39,           draft,      Variable signature v2 (varsig) multiformat
 multikey,                       multiformat,    0x3a,           draft,      Multikey multiformat 
+nonce,                          key,            0x3b,           draft,      Nonce random value
 protobuf,                       serialization,  0x50,           draft,      Protocol Buffers
 cbor,                           ipld,           0x51,           permanent,  CBOR
 raw,                            ipld,           0x55,           permanent,  raw binary
