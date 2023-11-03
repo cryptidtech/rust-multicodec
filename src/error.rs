@@ -14,7 +14,7 @@ pub enum Error {
 
     /// An invalid codec error
     #[error("Invalid codec value: 0x{0:x}")]
-    InvalidCodec(u64),
+    InvalidCodec(u128),
 
     /// A unsigned-varint error
     #[error("Unsigned varint decode error: {0}")]

@@ -11,14 +11,14 @@ macro_rules! build_codec_enum {
         /// Codecs from the multicodec table
         pub enum Codec {
             $( $var, )*
-            Unknown(u64),
+            Unknown(u128),
         }
 
         use Codec::*;
 
         impl Codec {
             /// Get the base code. NOTE: these are NOT varuint encoded
-            pub fn code(&self) -> u64 {
+            pub fn code(&self) -> u128 {
                 match *self {
                     $( $var => $val, )*
                     Unknown(code) => code,
@@ -26,7 +26,7 @@ macro_rules! build_codec_enum {
             }
 
             /// Convert a code to a base.
-            pub fn from_code(code: u64) -> Result<Codec, Error> {
+            pub fn from_code(code: u128) -> Result<Codec, Error> {
                 match code {
                     $( $val => Ok($var), )*
                     _ => Ok(Unknown(code)),
@@ -43,8 +43,8 @@ macro_rules! build_codec_enum {
 
             /// Convert the codec to a packed unisigned varint bytes
             pub fn to_vec(&self) -> Vec<u8> {
-                let mut buf = encode::u64_buffer();
-                encode::u64(self.code(), &mut buf);
+                let mut buf = encode::u128_buffer();
+                encode::u128(self.code(), &mut buf);
                 let mut v: Vec<u8> = Vec::new();
                 for b in buf {
                     v.push(b);
@@ -70,10 +70,10 @@ impl Into<Vec<u8>> for Codec {
     }
 }
 
-impl TryFrom<u64> for Codec {
+impl TryFrom<u128> for Codec {
     type Error = Error;
 
-    fn try_from(code: u64) -> Result<Self, Self::Error> {
+    fn try_from(code: u128) -> Result<Self, Self::Error> {
         Codec::from_code(code)
     }
 }

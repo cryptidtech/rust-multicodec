@@ -12,7 +12,7 @@ impl<'a> TryFrom<&'a [u8]> for MultiCodec<'a> {
     type Error = Error;
 
     fn try_from(bytes: &'a [u8]) -> Result<Self, Self::Error> {
-        let (code, data) = decode::u64(bytes).map_err(|e| Error::UnsignedVarintDecode(e))?;
+        let (code, data) = decode::u128(bytes).map_err(|e| Error::UnsignedVarintDecode(e))?;
         Ok(MultiCodec {
             codec: code.try_into()?,
             data,
