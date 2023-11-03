@@ -75,6 +75,7 @@ build_codec_enum! {
 	0xa2 => Aes256,
 	0xa3 => Chacha128,
 	0xa4 => Chacha256,
+	0xa5 => Chacha20Poly1305,
 	0xb0 => BitcoinBlock,
 	0xb1 => BitcoinTx,
 	0xb2 => BitcoinWitnessCommitment,
