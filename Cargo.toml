@@ -1,6 +1,6 @@
 [package]
 name = "multicodec"
-version = "0.2.12"
+version = "0.2.13"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
 description = "implementing the multicodec spec"
@@ -12,7 +12,7 @@ keywords = ["multiformats", "multicodec", "serde"]
 [dependencies]
 anyhow = "1.0"
 thiserror = "1.0"
-unsigned-varint = { version = "0.7", features = ["std"] }
+unsigned-varint = { version = "0.8", features = ["std"] }
 
 [build-dependencies]
 convert_case = "0.6"

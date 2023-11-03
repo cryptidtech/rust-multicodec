@@ -70,6 +70,12 @@ impl Into<Vec<u8>> for Codec {
     }
 }
 
+impl Into<u128> for Codec {
+    fn into(self) -> u128 {
+        self.code()
+    }
+}
+
 impl TryFrom<u128> for Codec {
     type Error = Error;
 
@@ -96,6 +102,11 @@ mod tests {
     #[test]
     fn test_to_code() {
         assert_eq!(0xED, Ed25519Pub.code());
+    }
+
+    #[test]
+    fn test_into_code() {
+        assert_eq!(0xEDu128, Ed25519Pub.into());
     }
 
     #[test]
