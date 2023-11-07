@@ -1,8 +1,7 @@
 #![allow(missing_docs)]
 use crate::error::Error;
-use multiutil::TryDecodeFrom;
+use multiutil::{EncodeInto, TryDecodeFrom};
 use std::fmt;
-use unsigned_varint::{decode, encode};
 
 macro_rules! build_codec_enum {
     {$( $val:expr => $var:ident, )*} => {
@@ -27,7 +26,7 @@ macro_rules! build_codec_enum {
             }
 
             /// Convert a code to a base.
-            pub fn from_code(code: u128) -> Result<Codec, Error> {
+            pub fn from_code(code: u128) -> Result<Self, Error> {
                 match code {
                     $( $val => Ok($var), )*
                     _ => Ok(Unknown(code)),
@@ -53,16 +52,13 @@ impl Default for Codec {
 
 impl Into<Vec<u8>> for Codec {
     fn into(self) -> Vec<u8> {
-        let mut buf = encode::u128_buffer();
-        encode::u128(self.code(), &mut buf);
-        let mut v: Vec<u8> = Vec::new();
-        for b in buf {
-            v.push(b);
-            if decode::is_last(b) {
-                break;
-            }
-        }
-        v
+        self.encode_into()
+    }
+}
+
+impl EncodeInto for Codec {
+    fn encode_into(self) -> Vec<u8> {
+        self.code().encode_into()
     }
 }
 
@@ -90,9 +86,8 @@ impl<'a> TryDecodeFrom<'a> for Codec {
     type Error = Error;
 
     fn try_decode_from(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), Self::Error> {
-        let (code, data) = decode::u128(bytes).map_err(|e| Error::UnsignedVarintDecode(e))?;
-        let codec: Codec = code.try_into()?;
-        Ok((codec, data))
+        let (code, data) = u128::try_decode_from(bytes)?;
+        Ok((Codec::try_from(code)?, data))
     }
 }
 

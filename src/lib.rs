@@ -7,9 +7,6 @@
     unused_qualifications
 )]
 
-/// The result type for this crate
-pub type Result<T> = anyhow::Result<T>;
-
 /// Errors produced by this library
 pub mod error;
 
@@ -20,7 +17,6 @@ pub mod codec;
 pub mod prelude {
     use super::*;
 
-    pub use super::Result;
     pub use codec::*;
     pub use error::*;
 }

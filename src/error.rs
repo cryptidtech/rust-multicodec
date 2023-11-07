@@ -8,15 +8,7 @@ pub enum Error {
     #[error("fmt error {0}")]
     Fmt(#[from] std::fmt::Error),
 
-    /// A generic error message
-    #[error("General varsig error: {0}")]
-    General(&'static str),
-
-    /// An invalid codec error
-    #[error("Invalid codec value: 0x{0:x}")]
-    InvalidCodec(u128),
-
-    /// A unsigned-varint error
-    #[error("Unsigned varint decode error: {0}")]
-    UnsignedVarintDecode(#[from] unsigned_varint::decode::Error),
+    /// Multiutil error
+    #[error(transparent)]
+    MultiUtilError(#[from] multiutil::Error),
 }

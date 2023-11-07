@@ -1,6 +1,6 @@
 [package]
 name = "multicodec"
-version = "0.2.14"
+version = "0.2.15"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
 description = "implementing the multicodec spec"
@@ -10,10 +10,8 @@ readme = "README.md"
 keywords = ["multiformats", "multicodec", "serde"]
 
 [dependencies]
-anyhow = "1.0"
 multiutil = { version = "0.1", git="https://github.com/cryptidtech/multiutil.git" }
 thiserror = "1.0"
-unsigned-varint = { version = "0.8", features = ["std"] }
 
 [build-dependencies]
 convert_case = "0.6"
