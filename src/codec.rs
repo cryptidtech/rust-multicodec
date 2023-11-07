@@ -57,7 +57,7 @@ impl Into<Vec<u8>> for Codec {
 }
 
 impl EncodeInto for Codec {
-    fn encode_into(self) -> Vec<u8> {
+    fn encode_into(&self) -> Vec<u8> {
         self.code().encode_into()
     }
 }
