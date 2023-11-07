@@ -13,9 +13,6 @@ pub type Result<T> = anyhow::Result<T>;
 /// Errors produced by this library
 pub mod error;
 
-/// Multicodec type and functions
-pub mod mc;
-
 /// Codec enum definition from the table
 pub mod codec;
 
@@ -26,5 +23,4 @@ pub mod prelude {
     pub use super::Result;
     pub use codec::*;
     pub use error::*;
-    pub use mc::*;
 }

@@ -1,5 +1,6 @@
 #![allow(missing_docs)]
 use crate::error::Error;
+use multiutil::TryDecodeFrom;
 use std::fmt;
 use unsigned_varint::{decode, encode};
 
@@ -40,20 +41,6 @@ macro_rules! build_codec_enum {
                     Unknown(_) => "Unknown",
                 }
             }
-
-            /// Convert the codec to a packed unisigned varint bytes
-            pub fn to_vec(&self) -> Vec<u8> {
-                let mut buf = encode::u128_buffer();
-                encode::u128(self.code(), &mut buf);
-                let mut v: Vec<u8> = Vec::new();
-                for b in buf {
-                    v.push(b);
-                    if decode::is_last(b) {
-                        break;
-                    }
-                }
-                v
-            }
         }
     }
 }
@@ -66,7 +53,16 @@ impl Default for Codec {
 
 impl Into<Vec<u8>> for Codec {
     fn into(self) -> Vec<u8> {
-        self.to_vec()
+        let mut buf = encode::u128_buffer();
+        encode::u128(self.code(), &mut buf);
+        let mut v: Vec<u8> = Vec::new();
+        for b in buf {
+            v.push(b);
+            if decode::is_last(b) {
+                break;
+            }
+        }
+        v
     }
 }
 
@@ -87,6 +83,16 @@ impl TryFrom<u128> for Codec {
 impl fmt::Display for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} (0x{:x})", self.as_str(), self.code())
+    }
+}
+
+impl<'a> TryDecodeFrom<'a> for Codec {
+    type Error = Error;
+
+    fn try_decode_from(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), Self::Error> {
+        let (code, data) = decode::u128(bytes).map_err(|e| Error::UnsignedVarintDecode(e))?;
+        let codec: Codec = code.try_into()?;
+        Ok((codec, data))
     }
 }
 
