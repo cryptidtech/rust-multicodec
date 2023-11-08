@@ -1,7 +1,10 @@
 #![allow(missing_docs)]
 use crate::error::Error;
 use multiutil::{EncodeInto, TryDecodeFrom};
-use std::fmt;
+use std::{
+    fmt,
+    hash::{Hash, Hasher},
+};
 
 macro_rules! build_codec_enum {
     {$( $val:expr => $var:ident, )*} => {
@@ -50,9 +53,10 @@ impl Default for Codec {
     }
 }
 
-impl Into<Vec<u8>> for Codec {
-    fn into(self) -> Vec<u8> {
-        self.encode_into()
+impl Hash for Codec {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        let v = self.encode_into();
+        v.hash(state);
     }
 }
 
