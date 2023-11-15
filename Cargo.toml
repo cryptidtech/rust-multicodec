@@ -1,6 +1,6 @@
 [package]
 name = "multicodec"
-version = "0.2.18"
+version = "0.2.19"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
 description = "implementing the multicodec spec"
@@ -9,9 +9,16 @@ license = "MIT OR Apache-2.0"
 readme = "README.md"
 keywords = ["multiformats", "multicodec", "serde"]
 
+[features]
+default = ["serde"]
+
 [dependencies]
 multiutil = { version = "0.1", git="https://github.com/cryptidtech/multiutil.git" }
+serde = { version = "1.0", default-features = false, features = ["alloc"], optional = true }
 thiserror = "1.0"
+
+[dev-dependencies]
+serde_test = "1.0"
 
 [build-dependencies]
 convert_case = "0.6"

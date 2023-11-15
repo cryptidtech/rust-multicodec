@@ -13,6 +13,10 @@ pub mod error;
 /// Codec enum definition from the table
 pub mod codec;
 
+/// Serde serialization
+#[cfg(feature = "serde")]
+pub mod serde;
+
 /// ...and in the darkness bind them
 pub mod prelude {
     use super::*;

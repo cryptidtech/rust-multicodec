@@ -9,19 +9,19 @@ use std::{
 macro_rules! build_codec_enum {
     {$( $val:expr => $var:ident, )*} => {
         #[allow(non_camel_case_types)]
-        #[derive(PartialEq, Eq, Clone, Copy, Debug)]
+        #[derive(PartialEq, Eq, Clone, Copy)]
 
         /// Codecs from the multicodec table
         pub enum Codec {
             $( $var, )*
-            Unknown(u128),
+            Unknown(u64),
         }
 
         use Codec::*;
 
         impl Codec {
             /// Get the base code. NOTE: these are NOT varuint encoded
-            pub fn code(&self) -> u128 {
+            pub fn code(&self) -> u64 {
                 match *self {
                     $( $var => $val, )*
                     Unknown(code) => code,
@@ -29,7 +29,7 @@ macro_rules! build_codec_enum {
             }
 
             /// Convert a code to a base.
-            pub fn from_code(code: u128) -> Result<Self, Error> {
+            pub fn from_code(code: u64) -> Result<Self, Error> {
                 match code {
                     $( $val => Ok($var), )*
                     _ => Ok(Unknown(code)),
@@ -66,23 +66,53 @@ impl EncodeInto for Codec {
     }
 }
 
-impl Into<u128> for Codec {
-    fn into(self) -> u128 {
+impl Into<u64> for Codec {
+    fn into(self) -> u64 {
         self.code()
     }
 }
 
-impl TryFrom<u128> for Codec {
+impl TryFrom<u8> for Codec {
     type Error = Error;
 
-    fn try_from(code: u128) -> Result<Self, Self::Error> {
+    fn try_from(code: u8) -> Result<Self, Self::Error> {
+        Codec::from_code(code as u64)
+    }
+}
+
+impl TryFrom<u16> for Codec {
+    type Error = Error;
+
+    fn try_from(code: u16) -> Result<Self, Self::Error> {
+        Codec::from_code(code as u64)
+    }
+}
+
+impl TryFrom<u32> for Codec {
+    type Error = Error;
+
+    fn try_from(code: u32) -> Result<Self, Self::Error> {
+        Codec::from_code(code as u64)
+    }
+}
+
+impl TryFrom<u64> for Codec {
+    type Error = Error;
+
+    fn try_from(code: u64) -> Result<Self, Self::Error> {
         Codec::from_code(code)
     }
 }
 
-impl fmt::Display for Codec {
+impl fmt::Debug for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} (0x{:x})", self.as_str(), self.code())
+    }
+}
+
+impl ToString for Codec {
+    fn to_string(&self) -> String {
+        self.as_str().to_string()
     }
 }
 
@@ -90,7 +120,7 @@ impl<'a> TryDecodeFrom<'a> for Codec {
     type Error = Error;
 
     fn try_decode_from(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), Self::Error> {
-        let (code, data) = u128::try_decode_from(bytes)?;
+        let (code, data) = u64::try_decode_from(bytes)?;
         Ok((Codec::try_from(code)?, data))
     }
 }
@@ -111,12 +141,17 @@ mod tests {
 
     #[test]
     fn test_into_code() {
-        assert_eq!(0xEDu128, Ed25519Pub.into());
+        assert_eq!(0xEDu64, Ed25519Pub.into());
     }
 
     #[test]
     fn test_string_conversion() {
         assert_eq!("Ed25519Pub", Ed25519Pub.as_str());
+    }
+
+    #[test]
+    fn test_encode_into() {
+        assert_eq!(vec![0xED, 0x01], Ed25519Pub.encode_into());
     }
 
     #[test]
