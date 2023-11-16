@@ -1,5 +1,4 @@
 use crate::prelude::Codec;
-use multiutil::EncodeInto;
 use serde::ser;
 
 /// Serialize instances of [`crate::prelude::Codec`] into varuint encoded bytes
@@ -8,7 +7,7 @@ impl ser::Serialize for Codec {
     where
         S: ser::Serializer,
     {
-        serializer.serialize_bytes(self.encode_into().as_slice())
+        serializer.serialize_u64(self.code())
     }
 }
 
@@ -20,6 +19,6 @@ mod tests {
     #[test]
     fn test_ser() {
         let c = Codec::Ed25519Pub;
-        assert_ser_tokens(&c, &[Token::Bytes(&[0xED, 0x01])]);
+        assert_ser_tokens(&c, &[Token::U64(0xED)]);
     }
 }
