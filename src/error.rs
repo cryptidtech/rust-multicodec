@@ -4,7 +4,7 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum Error {
-    /// Multiutil error
+    /// Multitrait error
     #[error(transparent)]
-    Multiutil(#[from] multiutil::Error),
+    Multitrait(#[from] multitrait::prelude::Error),
 }

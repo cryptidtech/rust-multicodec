@@ -1,6 +1,5 @@
-use crate::codec::Codec;
+use crate::prelude::{Codec, TryDecodeFrom};
 use core::fmt;
-use multiutil::TryDecodeFrom;
 use serde::de;
 
 /// Deserialize instances of [`crate::prelude::Codec`] from a varuint encoded

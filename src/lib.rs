@@ -23,4 +23,7 @@ pub mod prelude {
 
     pub use codec::*;
     pub use error::*;
+
+    // re-exports
+    pub use multitrait::prelude::{EncodeInto, TryDecodeFrom};
 }
