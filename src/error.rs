@@ -6,5 +6,5 @@ use thiserror::Error;
 pub enum Error {
     /// Multitrait error
     #[error(transparent)]
-    Multitrait(#[from] multitrait::prelude::Error),
+    Multitrait(#[from] multitrait::Error),
 }

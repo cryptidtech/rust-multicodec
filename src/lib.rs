@@ -9,6 +9,7 @@
 
 /// Errors produced by this library
 pub mod error;
+pub use error::Error;
 
 /// Codec enum definition from the table
 pub mod codec;
@@ -19,10 +20,7 @@ pub mod serde;
 
 /// ...and in the darkness bind them
 pub mod prelude {
-    use super::*;
-
-    pub use codec::*;
-    pub use error::*;
+    pub use super::{codec::*, error::*};
 
     // re-exports
     pub use multitrait::prelude::{EncodeInto, TryDecodeFrom};
