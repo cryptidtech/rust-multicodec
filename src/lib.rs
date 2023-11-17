@@ -14,13 +14,16 @@ pub use error::Error;
 /// Codec enum definition from the table
 pub mod codec;
 
+/// CodecInfo trait
+pub mod codec_info;
+
 /// Serde serialization
 #[cfg(feature = "serde")]
 pub mod serde;
 
 /// ...and in the darkness bind them
 pub mod prelude {
-    pub use super::{codec::*, error::*};
+    pub use super::{codec::*, codec_info::*, error::*};
 
     // re-exports
     pub use multitrait::prelude::{EncodeInto, TryDecodeFrom};
