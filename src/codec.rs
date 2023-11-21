@@ -109,9 +109,9 @@ impl fmt::Debug for Codec {
     }
 }
 
-impl ToString for Codec {
-    fn to_string(&self) -> String {
-        self.as_str().to_string()
+impl fmt::Display for Codec {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.as_str())
     }
 }
 
