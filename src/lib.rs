@@ -13,6 +13,7 @@ pub use error::Error;
 
 /// Codec enum definition from the table
 pub mod codec;
+pub use codec::Codec;
 
 /// Serde serialization
 #[cfg(feature = "serde")]

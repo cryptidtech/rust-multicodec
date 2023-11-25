@@ -54,13 +54,13 @@ impl Default for Codec {
 
 impl Hash for Codec {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        let v = self.encode_into();
+        let v: Vec<u8> = self.clone().into();
         v.hash(state);
     }
 }
 
-impl EncodeInto for Codec {
-    fn encode_into(&self) -> Vec<u8> {
+impl Into<Vec<u8>> for Codec {
+    fn into(self) -> Vec<u8> {
         self.code().encode_into()
     }
 }
@@ -103,6 +103,15 @@ impl TryFrom<u64> for Codec {
     }
 }
 
+impl<'a> TryFrom<&'a [u8]> for Codec {
+    type Error = Error;
+
+    fn try_from(s: &'a [u8]) -> Result<Codec, Error> {
+        let (code, _) = u64::try_decode_from(s)?;
+        Codec::try_from(code)
+    }
+}
+
 impl fmt::Debug for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} (0x{:x})", self.as_str(), self.code())
@@ -112,15 +121,6 @@ impl fmt::Debug for Codec {
 impl fmt::Display for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.as_str())
-    }
-}
-
-impl<'a> TryDecodeFrom<'a> for Codec {
-    type Error = Error;
-
-    fn try_decode_from(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), Self::Error> {
-        let (code, data) = u64::try_decode_from(bytes)?;
-        Ok((Codec::try_from(code)?, data))
     }
 }
 
@@ -150,7 +150,8 @@ mod tests {
 
     #[test]
     fn test_encode_into() {
-        assert_eq!(vec![0xED, 0x01], Ed25519Pub.encode_into());
+        let v: Vec<u8> = Ed25519Pub.into();
+        assert_eq!(vec![0xED, 0x01], v);
     }
 
     #[test]

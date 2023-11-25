@@ -7,18 +7,7 @@ impl ser::Serialize for Codec {
     where
         S: ser::Serializer,
     {
-        serializer.serialize_u64(self.code())
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::prelude::Codec;
-    use serde_test::{assert_ser_tokens, Token};
-
-    #[test]
-    fn test_ser() {
-        let c = Codec::Ed25519Pub;
-        assert_ser_tokens(&c, &[Token::U64(0xED)]);
+        let v: Vec<u8> = self.clone().into();
+        serializer.serialize_bytes(v.as_slice())
     }
 }

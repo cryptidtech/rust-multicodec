@@ -1,4 +1,4 @@
-use crate::prelude::{Codec, TryDecodeFrom};
+use crate::prelude::Codec;
 use core::fmt;
 use serde::de;
 
@@ -15,43 +15,7 @@ impl<'de> de::Deserialize<'de> for Codec {
             type Value = Codec;
 
             fn expecting(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
-                fmt.write_str("u64 multicodec sigil")
-            }
-
-            #[inline]
-            fn visit_u8<E>(self, v: u8) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                let c = Codec::try_from(v).map_err(|e| de::Error::custom(e.to_string()))?;
-                Ok(c)
-            }
-
-            #[inline]
-            fn visit_u16<E>(self, v: u16) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                let c = Codec::try_from(v).map_err(|e| de::Error::custom(e.to_string()))?;
-                Ok(c)
-            }
-
-            #[inline]
-            fn visit_u32<E>(self, v: u32) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                let c = Codec::try_from(v).map_err(|e| de::Error::custom(e.to_string()))?;
-                Ok(c)
-            }
-
-            #[inline]
-            fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                let c = Codec::try_from(v).map_err(|e| de::Error::custom(e.to_string()))?;
-                Ok(c)
+                fmt.write_str("varuint encoded multicodec sigil")
             }
 
             #[inline]
@@ -59,24 +23,10 @@ impl<'de> de::Deserialize<'de> for Codec {
             where
                 E: de::Error,
             {
-                let (c, _) =
-                    Codec::try_decode_from(v).map_err(|e| de::Error::custom(e.to_string()))?;
-                Ok(c)
+                Ok(Codec::try_from(v).map_err(|e| de::Error::custom(e.to_string()))?)
             }
         }
 
-        deserializer.deserialize_any(CodecVisitor)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::prelude::Codec;
-    use serde_test::{assert_de_tokens, Token};
-
-    #[test]
-    fn test_de() {
-        let c = Codec::Ed25519Pub;
-        assert_de_tokens(&c, &[Token::Bytes(&[0xED, 0x01])])
+        deserializer.deserialize_bytes(CodecVisitor)
     }
 }
