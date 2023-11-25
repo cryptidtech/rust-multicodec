@@ -112,6 +112,15 @@ impl<'a> TryFrom<&'a [u8]> for Codec {
     }
 }
 
+impl<'a> TryDecodeFrom<'a> for Codec {
+    type Error = Error;
+
+    fn try_decode_from(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), Self::Error> {
+        let (code, ptr) = u64::try_decode_from(bytes)?;
+        Ok((Codec::try_from(code)?, ptr))
+    }
+}
+
 impl fmt::Debug for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} (0x{:x})", self.as_str(), self.code())
