@@ -1,4 +1,4 @@
-use crate::prelude::Codec;
+use crate::Codec;
 use core::fmt;
 use serde::de;
 

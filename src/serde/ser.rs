@@ -1,4 +1,4 @@
-use crate::prelude::Codec;
+use crate::Codec;
 use serde::ser;
 
 /// Serialize instances of [`crate::prelude::Codec`] into varuint encoded bytes

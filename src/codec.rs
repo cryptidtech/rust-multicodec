@@ -1,5 +1,6 @@
 #![allow(missing_docs)]
-use crate::prelude::{EncodeInto, Error, TryDecodeFrom};
+use crate::Error;
+use multitrait::{EncodeInto, TryDecodeFrom};
 use std::{
     fmt,
     hash::{Hash, Hasher},
