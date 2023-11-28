@@ -124,7 +124,7 @@ impl<'a> TryDecodeFrom<'a> for Codec {
 
 impl fmt::Debug for Codec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{} (0x{:x})", self.as_str(), self.code())
+        write!(f, "{} - (0x{:x})", self.as_str(), self.code())
     }
 }
 
