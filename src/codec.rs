@@ -43,6 +43,14 @@ macro_rules! build_codec_enum {
                     Unknown(_) => "Unknown",
                 }
             }
+
+            /// Convert a &str to a Codec
+            pub fn from_str(s: &str) -> Result<Self, Error> {
+                match s {
+                    $(stringify!($var) => Ok($var), )*
+                    _ => Ok(Unknown(0))
+                }
+            }
         }
     }
 }
@@ -113,6 +121,14 @@ impl<'a> TryFrom<&'a [u8]> for Codec {
     }
 }
 
+impl TryFrom<&str> for Codec {
+    type Error = Error;
+
+    fn try_from(s: &str) -> Result<Codec, Error> {
+        Codec::from_str(s)
+    }
+}
+
 impl<'a> TryDecodeFrom<'a> for Codec {
     type Error = Error;
 
@@ -139,13 +155,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_from_code() {
-        assert_eq!(Ed25519Pub, Codec::from_code(0xED).unwrap());
+    fn test_to_code() {
+        assert_eq!(0xED, Ed25519Pub.code());
     }
 
     #[test]
-    fn test_to_code() {
-        assert_eq!(0xED, Ed25519Pub.code());
+    fn test_from_code() {
+        assert_eq!(Ed25519Pub, Codec::from_code(0xED).unwrap());
     }
 
     #[test]
@@ -154,8 +170,13 @@ mod tests {
     }
 
     #[test]
-    fn test_string_conversion() {
+    fn test_to_str() {
         assert_eq!("Ed25519Pub", Ed25519Pub.as_str());
+    }
+
+    #[test]
+    fn test_from_str() {
+        assert_eq!(Ed25519Pub, Codec::from_str("Ed25519Pub").unwrap());
     }
 
     #[test]
