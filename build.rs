@@ -33,7 +33,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     writeln!(f, "build_codec_enum! {{")?;
     for row in rdr.deserialize() {
         let rec: Record = row?;
-        writeln!(f, "\t{} => {},", rec.code.trim(), conv.convert(rec.name))?;
+        writeln!(
+            f,
+            "\t{} => ({}, \"{}\"),",
+            rec.code.trim(),
+            conv.convert(rec.name.clone()),
+            rec.name
+        )?;
     }
     writeln!(f, "}}")?;
 

@@ -7,7 +7,12 @@ impl ser::Serialize for Codec {
     where
         S: ser::Serializer,
     {
-        let v: Vec<u8> = self.clone().into();
-        serializer.serialize_bytes(v.as_slice())
+        if serializer.is_human_readable() {
+            let s: &str = self.clone().into();
+            serializer.serialize_str(s)
+        } else {
+            let v: Vec<u8> = self.clone().into();
+            serializer.serialize_bytes(v.as_slice())
+        }
     }
 }

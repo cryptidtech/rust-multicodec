@@ -1,9 +1,9 @@
 [package]
 name = "multicodec"
-version = "0.2.31"
+version = "0.3.0"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
-description = "implementing the multicodec spec"
+description = "Implementation of the Multicodec specification"
 repository = "https://github.com/cryptidtech/rust-multicodec"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
@@ -14,7 +14,7 @@ default = ["serde"]
 
 [dependencies]
 multitrait = { version = "0.1", git="https://github.com/cryptidtech/multitrait.git" }
-serde = { version = "1.0", default-features = false, features = ["alloc"], optional = true }
+serde = { version = "1.0", default-features = false, optional = true }
 thiserror = "1.0"
 
 [dev-dependencies]
