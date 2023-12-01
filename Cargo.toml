@@ -1,6 +1,6 @@
 [package]
 name = "multicodec"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
 description = "Implementation of the Multicodec specification"

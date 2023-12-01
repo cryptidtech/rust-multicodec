@@ -34,12 +34,11 @@ multicodec,                     multiformat,    0x30,           draft,
 multihash,                      multiformat,    0x31,           draft,
 multiaddr,                      multiformat,    0x32,           draft,
 multibase,                      multiformat,    0x33,           draft,
-varsigv1,                       multiformat,    0x34,           draft,      Variable signature v1 (varsig) multiformat
+varsig,                         multiformat,    0x34,           draft,      Variable signature (varsig) multiformat
 dns,                            multiaddr,      0x35,           permanent,
 dns4,                           multiaddr,      0x36,           permanent,
 dns6,                           multiaddr,      0x37,           permanent,
 dnsaddr,                        multiaddr,      0x38,           permanent,
-varsigv2,                       multiformat,    0x39,           draft,      Variable signature v2 (varsig) multiformat
 multikey,                       multiformat,    0x3a,           draft,      Multikey multiformat 
 nonce,                          key,            0x3b,           draft,      Nonce random value
 protobuf,                       serialization,  0x50,           draft,      Protocol Buffers
