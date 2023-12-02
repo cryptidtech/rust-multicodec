@@ -18,9 +18,10 @@ macro_rules! build_codec_enum {
 
         /// Codecs from the multicodec table
         #[allow(non_camel_case_types)]
-        #[derive(PartialEq, Eq, Clone, Copy)]
+        #[derive(Clone, Copy, Default, Eq, PartialEq)]
         #[non_exhaustive]
         pub enum Codec {
+            #[default]
             $( $i, )*
         }
 
@@ -64,13 +65,6 @@ macro_rules! build_codec_enum {
                 match self {
                     $( Codec::$i => $val, )*
                 }
-            }
-        }
-
-        /// The default Codec value is 0x00 -> Identity / Raw Binary
-        impl Default for Codec {
-            fn default() -> Self {
-                Codec::Identity
             }
         }
 
@@ -197,6 +191,11 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_default() {
+        assert_eq!(Codec::Identity, Codec::default());
+    }
+
+    #[test]
     fn test_to_code() {
         assert_eq!(0xED, Codec::Ed25519Pub.code());
     }
@@ -228,9 +227,27 @@ mod tests {
     }
 
     #[test]
-    #[should_panic]
-    fn test_unknown() {
-        Codec::try_from(0xDEAD_u64).unwrap();
+    fn test_debug_format() {
+        assert_eq!(
+            "ed25519-pub (0xed)".to_string(),
+            format!("{:?}", Codec::Ed25519Pub)
+        );
+    }
+
+    #[test]
+    fn test_invalid_value() {
+        assert_eq!(
+            Error::InvalidValue(0xDEAD_u64),
+            Codec::try_from(0xDEAD_u64).unwrap_err()
+        );
+    }
+
+    #[test]
+    fn test_invalid_name() {
+        assert_eq!(
+            Error::InvalidName("move-zig".to_string()),
+            Codec::try_from("move-zig").unwrap_err()
+        );
     }
 }
 
