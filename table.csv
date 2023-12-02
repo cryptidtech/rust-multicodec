@@ -38,7 +38,7 @@ dns,                            multiaddr,      0x35,           permanent,
 dns4,                           multiaddr,      0x36,           permanent,
 dns6,                           multiaddr,      0x37,           permanent,
 dnsaddr,                        multiaddr,      0x38,           permanent,
-multisig,                       multiformat,    0x39,           draft,      Digital signature multiformt
+multisig,                       multiformat,    0x39,           draft,      Digital signature multiformat
 multikey,                       multiformat,    0x3a,           draft,      Encryption key multiformat 
 nonce,                          key,            0x3b,           draft,      Nonce random value
 protobuf,                       serialization,  0x50,           draft,      Protocol Buffers
