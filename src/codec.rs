@@ -18,7 +18,7 @@ macro_rules! build_codec_enum {
 
         /// Codecs from the multicodec table
         #[allow(non_camel_case_types)]
-        #[derive(Clone, Copy, Default, Eq, PartialEq)]
+        #[derive(Clone, Copy, Default, Eq, Ord, PartialEq, PartialOrd)]
         #[non_exhaustive]
         pub enum Codec {
             #[default]
