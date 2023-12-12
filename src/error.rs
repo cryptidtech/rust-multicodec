@@ -1,7 +1,5 @@
-use thiserror::Error;
-
 /// Errors created by this library
-#[derive(Clone, Debug, Eq, Error, PartialEq)]
+#[derive(Clone, Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum Error {
     /// Multitrait error

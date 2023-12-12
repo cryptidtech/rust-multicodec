@@ -235,19 +235,15 @@ mod tests {
     }
 
     #[test]
+    #[should_panic]
     fn test_invalid_value() {
-        assert_eq!(
-            Error::InvalidValue(0xDEAD_u64),
-            Codec::try_from(0xDEAD_u64).unwrap_err()
-        );
+        Codec::try_from(0xDEAD_u64).unwrap();
     }
 
     #[test]
+    #[should_panic]
     fn test_invalid_name() {
-        assert_eq!(
-            Error::InvalidName("move-zig".to_string()),
-            Codec::try_from("move-zig").unwrap_err()
-        );
+        Codec::try_from("move-zig").unwrap();
     }
 }
 
