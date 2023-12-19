@@ -523,6 +523,8 @@ build_codec_enum! {
 	0xd0ea => (Bls12381G1Sig, "bls-12381-g1-sig"),
 	0xd0eb => (Bls12381G2Sig, "bls-12381-g2-sig"),
 	0xd0ed => (Eddsa, "eddsa"),
+	0xd0fa => (Bls12381G1SigShare, "bls-12381-g1-sig-share"),
+	0xd0fb => (Bls12381G2SigShare, "bls-12381-g2-sig-share"),
 	0xd191 => (Eip191, "eip-191"),
 	0xeb51 => (JwkJcsPub, "jwk_jcs-pub"),
 	0xf101 => (FilCommitmentUnsealed, "fil-commitment-unsealed"),
