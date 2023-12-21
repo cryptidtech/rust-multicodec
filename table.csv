@@ -180,6 +180,11 @@ rsa-priv,                       key,            0x1305,         draft,      RSA 
 p256-priv,                      key,            0x1306,         draft,      P-256 private key
 p384-priv,                      key,            0x1307,         draft,      P-384 private key
 p521-priv,                      key,            0x1308,         draft,      P-521 private key
+bls12_381-g1-priv,              key,            0x1309,         draft,      BLS12-381 G1 private key
+bls12_381-g2-priv,              key,            0x130a,         draft,      BLS12-381 G2 private key
+bls12_381-g1g2-priv,            key,            0x130b,         draft,      BLS12-381 G1 and G2 private key
+bls12_381-g1-priv-share,        key,            0x130c,         draft,      BLS12-381 G1 private key share
+bls12_381-g2-priv-share,        key,            0x130d,         draft,      BLS12-381 G2 private key share
 kangarootwelve,                 multihash,      0x1d01,         draft,      KangarooTwelve is an extendable-output hash function based on Keccak-p
 aes-gcm-256,                    encryption,     0x2000,         draft,      AES Galois/Counter Mode with 256-bit key and 12-byte IV
 silverpine,                     multiaddr,      0x3f42,         draft,      Experimental QUIC over yggdrasil and ironwood routing protocol
@@ -511,7 +516,7 @@ xxh3-64,                        hash,           0xb3e3,         draft,      Extr
 xxh3-128,                       hash,           0xb3e4,         draft,      Extremely fast non-cryptographic hash algorithm
 poseidon-bls12_381-a2-fc1,      multihash,      0xb401,         permanent,  Poseidon using BLS12-381 and arity of 2 with Filecoin parameters
 poseidon-bls12_381-a2-fc1-sc,   multihash,      0xb402,         draft,      Poseidon using BLS12-381 and arity of 2 with Filecoin parameters - high-security variant
-urdca-2015-canon,               ipld,           0xb403,         draft,      The result of canonicalizing an input according to URDCA-2015 and then expressing its hash value as a multihash value.
+rdfc-1,                         ipld,           0xb403,         draft,      The result of canonicalizing an input according to RDFC-1.0 and then expressing its hash value as a multihash value.
 ssz,                            serialization,  0xb501,         draft,      SimpleSerialize (SSZ) serialization
 ssz-sha2-256-bmt,               multihash,      0xb502,         draft,      SSZ Merkle tree root using SHA2-256 as the hashing function and SSZ serialization for the block binary
 json-jcs,                       ipld,           0xb601,         draft,      The result of canonicalizing an input according to JCS - JSON Canonicalisation Scheme (RFC 8785)
@@ -520,11 +525,11 @@ zeroxcert-imprint-256,          zeroxcert,      0xce11,         draft,      0xce
 nonstandard-sig,                varsig,         0xd000,         deprecated, Namespace for all not yet standard signature algorithms
 bcrypt-pbkdf,                   multihash,      0xd00d,         draft,      Bcrypt-PBKDF key derivation function
 es256k,                         varsig,         0xd0e7,         draft,      ES256K Siganture Algorithm (secp256k1)
-bls-12381-g1-sig,               varsig,         0xd0ea,         draft,      G1 signature for BLS-12381-G2
-bls-12381-g2-sig,               varsig,         0xd0eb,         draft,      G2 signature for BLS-12381-G1
+bls12_381-g1-sig,               varsig,         0xd0ea,         draft,      G1 signature for BLS-12381-G2
+bls12_381-g2-sig,               varsig,         0xd0eb,         draft,      G2 signature for BLS-12381-G1
 eddsa,                          varsig,         0xd0ed,         draft,      Edwards-Curve Digital Signature Algorithm
-bls-12381-g1-sig-share,         varsig,         0xd0fa,         draft,      G1 signature share for BLS-12381-G2
-bls-12381-g2-sig-share,         varsig,         0xd0fb,         draft,      G1 signature share for BLS-12381-G2
+bls12_381-g1-sig-share,         varsig,         0xd0fa,         draft,      G1 signature share for BLS-12381-G2
+bls12_381-g2-sig-share,         varsig,         0xd0fb,         draft,      G1 signature share for BLS-12381-G2
 eip-191,                        varsig,         0xd191,         draft,      EIP-191 Ethereum Signed Data Standard
 jwk_jcs-pub,                    key,            0xeb51,         draft,      JSON object containing only the required members of a JWK (RFC 7518 and RFC 7517) representing the public key. Serialisation based on JCS (RFC 8785)
 fil-commitment-unsealed,        filecoin,       0xf101,         permanent,  Filecoin piece or sector data commitment merkle node/root (CommP & CommD)
