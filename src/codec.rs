@@ -207,7 +207,7 @@ mod tests {
 
     #[test]
     fn test_into_code() {
-        assert_eq!(0xED_u64, Codec::Ed25519Pub.into());
+        assert_eq!(0xED_u64, <Codec as Into<u64>>::into(Codec::Ed25519Pub));
     }
 
     #[test]

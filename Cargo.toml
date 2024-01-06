@@ -1,6 +1,6 @@
 [package]
 name = "multicodec"
-version = "0.3.13"
+version = "0.3.14"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Huseby <dwh@linuxprogrammer.org>"]
 description = "Implementation of the Multicodec specification"
@@ -14,10 +14,12 @@ default = ["serde"]
 
 [dependencies]
 multitrait = { version = "0.1", git="https://github.com/cryptidtech/multitrait.git" }
-serde = { version = "1.0", default-features = false, optional = true }
+serde = { version = "1.0", default-features = false, optional = true, features = ['serde_derive'] }
 thiserror = "1.0"
 
 [dev-dependencies]
+serde_cbor = "0.11"
+serde_json = "1.0"
 serde_test = "1.0"
 
 [build-dependencies]
