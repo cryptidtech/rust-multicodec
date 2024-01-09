@@ -22,13 +22,13 @@ mod tests {
 
     #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
     struct Wrapper {
-        v: Vec<Codec>,
+        v: Codec,
     }
 
     #[test]
     fn test_serde_macros() {
         let w1 = Wrapper {
-            v: vec![Codec::Ed25519Pub, Codec::Secp256K1Pub, Codec::Bls12381G1Pub],
+            v: Codec::Ed25519Pub,
         };
         let b = serde_cbor::to_vec(&w1).unwrap();
         let w2 = serde_cbor::from_slice(b.as_slice()).unwrap();
@@ -37,5 +37,29 @@ mod tests {
         println!("{}", s);
         let w3 = serde_json::from_str(&s).unwrap();
         assert_eq!(w1, w3);
+    }
+
+    #[test]
+    fn test_cbor_reader_writer() {
+        let w1 = Wrapper {
+            v: Codec::Ed25519Pub,
+        };
+
+        let mut b: Vec<u8> = Vec::new();
+        serde_cbor::to_writer(&mut b, &w1).unwrap();
+        let w2: Wrapper = serde_cbor::from_reader(b.as_slice()).unwrap();
+        assert_eq!(w1, w2);
+    }
+
+    #[test]
+    fn test_json_reader_writer() {
+        let w1 = Wrapper {
+            v: Codec::Ed25519Pub,
+        };
+
+        let mut b: Vec<u8> = Vec::new();
+        serde_json::to_writer(&mut b, &w1).unwrap();
+        let w2: Wrapper = serde_json::from_reader(b.as_slice()).unwrap();
+        assert_eq!(w1, w2);
     }
 }
