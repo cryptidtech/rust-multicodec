@@ -9,13 +9,16 @@ impl<'de> Deserialize<'de> for Codec {
     where
         D: Deserializer<'de>,
     {
-        struct StrVisitor;
+        struct CodecVisitor;
 
-        impl<'de> de::Visitor<'de> for StrVisitor {
+        impl<'de> de::Visitor<'de> for CodecVisitor {
             type Value = Codec;
 
             fn expecting(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-                write!(fmt, "borrowed str, str, or String")
+                write!(
+                    fmt,
+                    "borrowed str, str, String, borrowed byte array, byte buf, bytes, or sequence"
+                )
             }
 
             fn visit_string<E>(self, s: String) -> Result<Self::Value, E>
@@ -38,17 +41,6 @@ impl<'de> Deserialize<'de> for Codec {
             {
                 Ok(Codec::try_from(s).map_err(|e| de::Error::custom(e.to_string()))?)
             }
-        }
-
-        struct BytesVisitor;
-
-        impl<'de> de::Visitor<'de> for BytesVisitor {
-            type Value = Codec;
-
-            fn expecting(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-                write!(fmt, "borrowed byte array, byte buf, bytes, or sequence")
-            }
-
             fn visit_seq<S>(self, mut seq: S) -> Result<Self::Value, S::Error>
             where
                 S: de::SeqAccess<'de>,
@@ -82,10 +74,6 @@ impl<'de> Deserialize<'de> for Codec {
             }
         }
 
-        if deserializer.is_human_readable() {
-            deserializer.deserialize_any(StrVisitor)
-        } else {
-            deserializer.deserialize_any(BytesVisitor)
-        }
+        deserializer.deserialize_any(CodecVisitor)
     }
 }
