@@ -32,22 +32,13 @@ impl<'de> Deserialize<'de> for Codec {
                 Ok(Self::Value::try_from(s).map_err(|e| de::Error::custom(e.to_string()))?)
             }
 
+            // longest lifetime
             #[inline]
             fn visit_str<E>(self, s: &str) -> Result<Self::Value, E>
             where
                 E: de::Error,
             {
                 Ok(Self::Value::try_from(s).map_err(|e| de::Error::custom(e.to_string()))?)
-            }
-
-            // longest lifetime
-            #[inline]
-            fn visit_string<E>(self, s: String) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                Ok(Self::Value::try_from(s.as_str())
-                    .map_err(|e| de::Error::custom(e.to_string()))?)
             }
 
             // binary
@@ -61,22 +52,13 @@ impl<'de> Deserialize<'de> for Codec {
                 Ok(Self::Value::try_from(b).map_err(|e| de::Error::custom(e.to_string()))?)
             }
 
+            // longest lifetime
             #[inline]
             fn visit_bytes<E>(self, b: &[u8]) -> Result<Self::Value, E>
             where
                 E: de::Error,
             {
                 Ok(Self::Value::try_from(b).map_err(|e| de::Error::custom(e.to_string()))?)
-            }
-
-            // longest lifetime
-            #[inline]
-            fn visit_byte_buf<E>(self, v: Vec<u8>) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                Ok(Self::Value::try_from(v.as_slice())
-                    .map_err(|e| de::Error::custom(e.to_string()))?)
             }
 
             // binary / human readable
