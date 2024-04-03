@@ -11,7 +11,7 @@ use core::{
     fmt,
     hash::{Hash, Hasher},
 };
-use multitrait::{EncodeInto, TryDecodeFrom};
+use multitrait::{EncodeInto, Null, TryDecodeFrom};
 
 macro_rules! build_codec_enum {
     {$( $val:expr => ($i:ident, $s:expr), )*} => {
@@ -172,6 +172,16 @@ macro_rules! build_codec_enum {
             }
         }
 
+        impl Null for Codec {
+            fn null() -> Self {
+                Self::default()
+            }
+
+            fn is_null(&self) -> bool {
+                *self == Self::null()
+            }
+        }
+
         impl Codec {
             /// Get the base code. NOTE: these are NOT varuint encoded
             pub fn code(&self) -> u64 {
@@ -193,6 +203,15 @@ mod tests {
     #[test]
     fn test_default() {
         assert_eq!(Codec::Identity, Codec::default());
+    }
+
+    #[test]
+    fn test_null() {
+        let c1 = Codec::null();
+        assert!(c1.is_null());
+        let c2 = Codec::default();
+        assert_eq!(c1, c2);
+        assert!(c2.is_null());
     }
 
     #[test]

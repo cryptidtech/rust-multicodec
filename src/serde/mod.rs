@@ -5,6 +5,7 @@ mod ser;
 #[cfg(test)]
 mod tests {
     use crate::prelude::Codec;
+    use multitrait::Null;
     use serde::{Deserialize, Serialize};
     use serde_test::{assert_tokens, Configure, Token};
 
@@ -18,6 +19,28 @@ mod tests {
     fn test_serde_readable() {
         let c = Codec::Ed25519Pub;
         assert_tokens(&c.readable(), &[Token::BorrowedStr("ed25519-pub")])
+    }
+
+    #[test]
+    fn test_null_serde_compact() {
+        let c = Codec::null();
+        assert_tokens(
+            &c.compact(),
+            &[
+                Token::BorrowedBytes(&[0x00])
+            ]
+        );
+    }
+
+    #[test]
+    fn test_null_serde_readable() {
+        let c = Codec::null();
+        assert_tokens(
+            &c.readable(),
+            &[
+                Token::BorrowedStr("identity")
+            ]
+        );
     }
 
     #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
