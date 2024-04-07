@@ -536,6 +536,7 @@ build_codec_enum! {
 	0xb403 => (Rdfc1, "rdfc-1"),
 	0xb501 => (Ssz, "ssz"),
 	0xb502 => (SszSha2256Bmt, "ssz-sha2-256-bmt"),
+	0xb510 => (Sha2256Chunked, "sha2-256-chunked"),
 	0xb601 => (JsonJcs, "json-jcs"),
 	0xcc01 => (Iscc, "iscc"),
 	0xce11 => (ZeroxcertImprint256, "zeroxcert-imprint-256"),

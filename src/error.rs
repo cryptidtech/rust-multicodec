@@ -1,3 +1,4 @@
+// SPDX-License-Idnetifier: MIT or Apache-2.0
 /// Errors created by this library
 #[derive(Clone, Debug, thiserror::Error)]
 #[non_exhaustive]

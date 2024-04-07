@@ -1,3 +1,4 @@
+// SPDX-License-Idnetifier: MIT or Apache-2.0
 use crate::Codec;
 use core::fmt;
 use serde::{de, Deserialize, Deserializer};

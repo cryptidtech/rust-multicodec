@@ -1,3 +1,4 @@
+// SPDX-License-Idnetifier: MIT or Apache-2.0
 //!
 #![deny(
     trivial_casts,
