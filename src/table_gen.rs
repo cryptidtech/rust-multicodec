@@ -575,8 +575,8 @@ build_codec_enum! {
 	0xd01306 => (LamportMsig, "lamport-msig"),
 	0xd01307 => (LamportShareMsig, "lamport-share-msig"),
 	0xd01308 => (Es256Msig, "es256-msig"),
-	0xd01309 => (Es284Msig, "es284-msig"),
-	0xd0130a => (Es512Msig, "es512-msig"),
+	0xd01309 => (Es384Msig, "es384-msig"),
+	0xd0130a => (Es521Msig, "es521-msig"),
 	0xd0130b => (Rs256Msig, "rs256-msig"),
 	0xd02000 => (Scion, "scion"),
 }
