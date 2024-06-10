@@ -1,4 +1,4 @@
-// SPDX-License-Idnetifier: MIT or Apache-2.0
+// SPDX-License-Identifier: MIT or Apache-2.0
 //!
 #![warn(missing_docs)]
 #![deny(
