@@ -1,6 +1,6 @@
 [package]
 name = "multicodec"
-version = "1.0.6"
+version = "1.0.7"
 edition = "2021"
 authors = ["Benjamin Kampmann <ben@gnunicorn.org>", "Dave Grantham <dwg@linuxprogrammer.org>"]
 description = "Implementation of the Multicodec specification"
@@ -13,7 +13,9 @@ keywords = ["multiformats", "multicodec", "serde"]
 default = ["serde"]
 
 [dependencies]
+multibase = { version = "1.0", git="https://github.com/cryptidtech/rust-multibase.git" }
 multitrait = { version = "1.0", git="https://github.com/cryptidtech/multitrait.git" }
+multiutil = { version = "1.0", git="https://github.com/cryptidtech/multiutil.git" }
 serde = { version = "1.0", default-features = false, optional = true, features = ['serde_derive'] }
 thiserror = "1.0"
 

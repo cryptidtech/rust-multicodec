@@ -12,7 +12,9 @@ use core::{
     fmt,
     hash::{Hash, Hasher},
 };
+use multibase::Base;
 use multitrait::{EncodeInto, Null, TryDecodeFrom};
+use multiutil::EncodingInfo;
 
 macro_rules! build_codec_enum {
     {$( $val:expr => ($i:ident, $s:expr), )*} => {
@@ -73,6 +75,18 @@ macro_rules! build_codec_enum {
             fn hash<H: Hasher>(&self, state: &mut H) {
                 let v: Vec<u8> = self.clone().into();
                 v.hash(state);
+            }
+        }
+
+        impl EncodingInfo for Codec {
+            /// Return the preferred string encoding
+            fn preferred_encoding() -> Base {
+                Base::Base16Lower
+            }
+
+            /// Same
+            fn encoding(&self) -> Base {
+                Self::preferred_encoding()
             }
         }
 
