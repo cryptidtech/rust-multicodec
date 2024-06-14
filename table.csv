@@ -8,6 +8,7 @@ tcp,                            multiaddr,      0x06,           permanent,
 vlad,                           vlad,           0x07,           draft,      Verifiable Long-lived ADdress
 provenance-log,                 serialization,  0x08,           draft,      Verifiable and permissioned append only log
 provenance-log-entry,           serialization,  0x09,           draft,      Verifiable and permissioned append only log
+provenance-log-script,          serialization,  0x0a,           draft,      Verifiable and permissioned append only log
 sha1,                           multihash,      0x11,           permanent,
 sha2-256,                       multihash,      0x12,           permanent,
 sha2-512,                       multihash,      0x13,           permanent,

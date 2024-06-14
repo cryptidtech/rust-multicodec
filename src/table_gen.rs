@@ -8,6 +8,7 @@ build_codec_enum! {
 	0x07 => (Vlad, "vlad"),
 	0x08 => (ProvenanceLog, "provenance-log"),
 	0x09 => (ProvenanceLogEntry, "provenance-log-entry"),
+	0x0a => (ProvenanceLogScript, "provenance-log-script"),
 	0x11 => (Sha1, "sha1"),
 	0x12 => (Sha2256, "sha2-256"),
 	0x13 => (Sha2512, "sha2-512"),
