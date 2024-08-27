@@ -170,6 +170,7 @@ build_codec_enum! {
 	0x1207 => (Vlad, "vlad"),
 	0x1208 => (ProvenanceLog, "provenance-log"),
 	0x1209 => (ProvenanceLogEntry, "provenance-log-entry"),
+	0x120a => (ProvenanceLogScript, "provenance-log-script"),
 	0x1239 => (Multisig, "multisig"),
 	0x123a => (Multikey, "multikey"),
 	0x123b => (Nonce, "nonce"),
