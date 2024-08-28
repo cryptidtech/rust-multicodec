@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT or Apache-2.0
-//!
+//! multicodec
 #![warn(missing_docs)]
 #![deny(
     trivial_casts,

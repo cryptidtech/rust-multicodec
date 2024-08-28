@@ -40,9 +40,9 @@ macro_rules! build_codec_enum {
         }
 
         /// Convert a Codec into a type that implements AsRef<str>
-        impl Into<&str> for Codec {
-            fn into(self) -> &'static str {
-                match self {
+        impl From<Codec> for &str {
+            fn from(codec: Codec) -> &'static str {
+                match codec {
                     $( Codec::$i => $s, )*
                 }
             }
@@ -61,9 +61,9 @@ macro_rules! build_codec_enum {
         }
 
         /// Convert a Codec into a u64
-        impl Into<u64> for Codec {
-            fn into(self) -> u64 {
-                match self {
+        impl From<Codec> for u64 {
+            fn from(codec: Codec) -> u64 {
+                match codec {
                     $( Codec::$i => $val, )*
                 }
             }
@@ -77,9 +77,9 @@ macro_rules! build_codec_enum {
         }
 
         /// Serialize a Codec as a unsigned varint in a Vec<u8>
-        impl Into<Vec<u8>> for Codec {
-            fn into(self) -> Vec<u8> {
-                let v: u64 = self.into();
+        impl From<Codec> for Vec<u8> {
+            fn from(codec: Codec) -> Vec<u8> {
+                let v: u64 = codec.into();
                 v.encode_into()
             }
         }

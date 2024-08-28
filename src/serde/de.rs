@@ -30,7 +30,7 @@ impl<'de> Deserialize<'de> for Codec {
             where
                 E: de::Error,
             {
-                Ok(Self::Value::try_from(s).map_err(|e| de::Error::custom(e.to_string()))?)
+                Self::Value::try_from(s).map_err(|e| de::Error::custom(e.to_string()))
             }
 
             // longest lifetime
@@ -39,7 +39,7 @@ impl<'de> Deserialize<'de> for Codec {
             where
                 E: de::Error,
             {
-                Ok(Self::Value::try_from(s).map_err(|e| de::Error::custom(e.to_string()))?)
+                Self::Value::try_from(s).map_err(|e| de::Error::custom(e.to_string()))
             }
 
             // binary
@@ -50,7 +50,7 @@ impl<'de> Deserialize<'de> for Codec {
             where
                 E: de::Error,
             {
-                Ok(Self::Value::try_from(b).map_err(|e| de::Error::custom(e.to_string()))?)
+                Self::Value::try_from(b).map_err(|e| de::Error::custom(e.to_string()))
             }
 
             // longest lifetime
@@ -59,7 +59,7 @@ impl<'de> Deserialize<'de> for Codec {
             where
                 E: de::Error,
             {
-                Ok(Self::Value::try_from(b).map_err(|e| de::Error::custom(e.to_string()))?)
+                Self::Value::try_from(b).map_err(|e| de::Error::custom(e.to_string()))
             }
 
             // binary / human readable
@@ -75,8 +75,8 @@ impl<'de> Deserialize<'de> for Codec {
                 while let Some(b) = seq.next_element()? {
                     v.push(b);
                 }
-                Ok(Self::Value::try_from(v.as_slice())
-                    .map_err(|e| de::Error::custom(e.to_string()))?)
+                Self::Value::try_from(v.as_slice())
+                    .map_err(|e| de::Error::custom(e.to_string()))
             }
         }
 

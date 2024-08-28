@@ -9,10 +9,10 @@ impl ser::Serialize for Codec {
         S: ser::Serializer,
     {
         if serializer.is_human_readable() {
-            let s: &str = self.clone().into();
+            let s: &str = (*self).into();
             serializer.serialize_str(s)
         } else {
-            let v: Vec<u8> = self.clone().into();
+            let v: Vec<u8> = (*self).into();
             serializer.serialize_bytes(v.as_slice())
         }
     }
