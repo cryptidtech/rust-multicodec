@@ -7,6 +7,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-09-14
+
+### Deprecated
+
+- All 36 Classic McEliece codec variants (`mceliece*` and `x25519-mceliece348864`) now carry `#[deprecated]` attributes. Key-recovery attacks now solve the TII McEliece challenges; see [tii-solved](https://github.com/mjosaarinen/tii-solved) for the recovered keys. Uses of these variants emit compiler warnings. The variants remain compiled, matchable, and decodable so stored multicodec-tagged data keeps working.
+
 ## [1.4.0] - 2026-09-03
 
 ### Added
