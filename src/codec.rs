@@ -31,7 +31,7 @@ use core::{
 use multi_trait::{EncodeInto, Null, TryDecodeFrom};
 
 macro_rules! build_codec_enum {
-    {$( $val:expr => ($i:ident, $s:expr), )*} => {
+    {$( $val:expr => ( $(#[$vattr:meta])* $i:ident, $s:expr), )*} => {
 
         /// Codecs from the multicodec table
         #[allow(non_camel_case_types)]
@@ -39,11 +39,12 @@ macro_rules! build_codec_enum {
         #[non_exhaustive]
         pub enum Codec {
             #[default]
-            $( $i, )*
+            $( $(#[$vattr])* $i, )*
         }
 
         /// Convert from the canonical string name of the multicodec to the
         /// associated enum/value.
+        #[allow(deprecated)]
         impl TryFrom<&str> for Codec {
             type Error = Error;
 
@@ -56,6 +57,7 @@ macro_rules! build_codec_enum {
         }
 
         /// Convert a Codec into a type that implements `AsRef<str>`
+        #[allow(deprecated)]
         impl From<Codec> for &str {
             fn from(codec: Codec) -> &'static str {
                 match codec {
@@ -65,6 +67,7 @@ macro_rules! build_codec_enum {
         }
 
         /// Convert from the value of the multicodec to the associated enum/value.
+        #[allow(deprecated)]
         impl TryFrom<u64> for Codec {
             type Error = Error;
 
@@ -77,6 +80,7 @@ macro_rules! build_codec_enum {
         }
 
         /// Convert a Codec into a u64
+        #[allow(deprecated)]
         impl From<Codec> for u64 {
             fn from(codec: Codec) -> u64 {
                 match codec {
@@ -283,6 +287,17 @@ mod tests {
     #[test]
     fn test_to_str() {
         assert_eq!("ed25519-pub", Codec::Ed25519Pub.as_str());
+    }
+
+    #[test]
+    #[allow(deprecated)]
+    fn test_mceliece_roundtrip() {
+        // The McEliece variants are deprecated but stay compiled and decodable
+        // so stored multicodec-tagged data keeps working.
+        let codec = Codec::try_from(0x1220).unwrap();
+        assert_eq!(Codec::Mceliece348864Pub, codec);
+        assert_eq!("mceliece348864-pub", codec.as_str());
+        assert_eq!(0x1220_u64, codec.code());
     }
 
     #[test]

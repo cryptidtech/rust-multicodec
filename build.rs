@@ -89,7 +89,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // Generate enum variant
         let variant_name = conv.convert(&rec.name);
-        writeln!(f, "\t{} => ({}, \"{}\"),", code_str, variant_name, rec.name)?;
+        // Classic McEliece key material is deprecated. Key-recovery attacks now
+        // solve the TII McEliece challenges, so every McEliece variant carries a
+        // deprecation attribute; uses emit a compiler warning. The variants stay
+        // compiled and decodable so stored multicodec-tagged data keeps working.
+        // See https://github.com/mjosaarinen/tii-solved for the recovered keys.
+        // The attribute precedes the variant name inside the tuple so the
+        // macro's `expr` fragment stays unambiguous.
+        if rec.name.contains("mceliece") {
+            writeln!(
+                f,
+                "\t{} => (#[deprecated(since = \"1.5.0\", note = \"Classic McEliece key recovery attacks: see https://github.com/mjosaarinen/tii-solved\")] {}, \"{}\"),",
+                code_str, variant_name, rec.name
+            )?;
+        } else {
+            writeln!(f, "\t{} => ({}, \"{}\"),", code_str, variant_name, rec.name)?;
+        }
 
         record_count += 1;
     }
