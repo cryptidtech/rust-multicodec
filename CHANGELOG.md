@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.5.0] - 2026-09-14
+
+### Deprecated
+
+- All 36 Classic McEliece codec variants (`mceliece*` and `x25519-mceliece348864`) now carry `#[deprecated]` attributes. Key-recovery attacks now solve the TII McEliece challenges; see [tii-solved](https://github.com/mjosaarinen/tii-solved) for the recovered keys. Uses of these variants emit compiler warnings. The variants remain compiled, matchable, and decodable so stored multicodec-tagged data keeps working.
+
+## [1.4.0] - 2026-09-03
+
+### Added
+
+- Three new codec entries for the proof-of-possession framework: `multiproof` (`0xd01330`, multiformat), `wacc-script-with-pop` (`0xd01331`, multiformat), and `xeddsa-msig` (`0xd01332`, multisig).
+- The `Codec` enum now has 885 variants (up from 882).
+
+### Notes
+
+- This is a minor version bump. The `Codec` enum is `#[non_exhaustive]`, so new variants are additive and do not break downstream match expressions.
+
 ## [1.3.0] - 2026-09-01
 
 ### Added
